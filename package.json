@@ -9,6 +9,12 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@biomejs/biome": "^1.5.3",
     "hono": "^3.12.6"
+  },
+  "scripts": {
+    "lint": "biome lint --apply .",
+    "format": "biome format --write .",
+    "biome": "bun format && bun lint"
   }
 }
