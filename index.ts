@@ -6,6 +6,7 @@ import HonoReq from "./hono-request";
 // import Socket from "./websocket";
 import MiddleWare from "./middleware";
 import Helpers from "./helpers";
+import JSX from "./jsx";
 
 const app = new Hono();
 
@@ -15,5 +16,6 @@ app.route("/request", HonoReq);
 // app.route("/ws", Socket);
 app.route("/middleware", MiddleWare);
 app.route("/helpers", Helpers);
+app.route("/jsx", JSX);
 
 export default app;
