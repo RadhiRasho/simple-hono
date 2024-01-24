@@ -7,6 +7,7 @@ import HonoReq from "./hono-request";
 import MiddleWare from "./middleware";
 import Helpers from "./helpers";
 import JSX from "./jsx";
+import Validator from "./validator";
 
 const app = new Hono();
 
@@ -17,5 +18,7 @@ app.route("/request", HonoReq);
 app.route("/middleware", MiddleWare);
 app.route("/helpers", Helpers);
 app.route("/jsx", JSX);
+
+app.route("/validator", Validator);
 
 export default app;
