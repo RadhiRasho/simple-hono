@@ -8,6 +8,7 @@ import MiddleWare from "./middleware";
 import Helpers from "./helpers";
 import JSX from "./jsx";
 import Validator from "./validator";
+import RPC from "./rpc";
 
 const app = new Hono();
 
@@ -20,5 +21,6 @@ app.route("/helpers", Helpers);
 app.route("/jsx", JSX);
 
 app.route("/validator", Validator);
+app.route("/rpc", RPC);
 
 export default app;

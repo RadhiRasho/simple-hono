@@ -16,9 +16,11 @@ app.post(
 	}),
 	(c) => {
 		const { body } = c.req.valid("json");
+
 		return c.json(
 			{
 				message: "Created!",
+				body,
 			},
 			201,
 		);
