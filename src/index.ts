@@ -9,6 +9,8 @@ import Helpers from "./helpers";
 import JSX from "./jsx";
 import Validator from "./validator";
 import RPC from "./rpc";
+import BestPractices from "./best-practices";
+import TProxy from "./proxy";
 
 const app = new Hono();
 
@@ -22,5 +24,6 @@ app.route("/jsx", JSX);
 
 app.route("/validator", Validator);
 app.route("/rpc", RPC);
-
+app.route("/best-practices", BestPractices);
+app.route("/proxy", TProxy);
 export default app;
