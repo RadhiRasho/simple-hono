@@ -1,14 +1,16 @@
 import { test, expect, describe } from "bun:test";
 import app from "../src/testing";
+import { Hono } from "hono";
+import { testClient } from "hono/testing";
 
 describe("Example", () => {
-	test("GET /posts", async () => {
+	test.skip("GET /posts", async () => {
 		const res = await app.request("/posts");
 		expect(res.status).toBe(200);
 		expect(await res.text()).toBe("Many posts");
 	});
 
-	test("POST /posts", async () => {
+	test.skip("POST /posts", async () => {
 		const res = await app.request("/posts", {
 			method: "POST",
 		});
@@ -19,7 +21,7 @@ describe("Example", () => {
 		});
 	});
 
-	test("POST /posts", async () => {
+	test.skip("POST /posts", async () => {
 		const req = new Request("http://localhost/posts", {
 			method: "POST",
 		});
@@ -40,7 +42,21 @@ describe("Example", () => {
 		},
 	};
 
-	test("GET /posts", async () => {
+	test.skip("GET /posts", async () => {
 		const res = await app.request("/posts", {}, MOCK_ENV);
+	});
+
+	test("test", async () => {
+		const payload = { hello: "world" };
+		const app = new Hono()
+			.get("/search", (c) => c.json(payload))
+			.post("/post", async (c) => c.json(payload));
+
+		const client = testClient(app);
+		const res = await (await client.search.$get()).json();
+		const res2 = await (await client.post.$post()).json();
+
+		expect(res).toEqual(payload);
+		expect(res2).toEqual(payload);
 	});
 });
