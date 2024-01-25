@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+// import { getRouterName, showRoutes } from "hono/dev";
 
 import Routes from "./routes";
 import Context from "./context";
@@ -11,6 +12,7 @@ import Validator from "./validator";
 import RPC from "./rpc";
 import BestPractices from "./best-practices";
 import TProxy from "./proxy";
+import JWTAuth from "./jwt-auth";
 
 const app = new Hono();
 
@@ -26,4 +28,12 @@ app.route("/validator", Validator);
 app.route("/rpc", RPC);
 app.route("/best-practices", BestPractices);
 app.route("/proxy", TProxy);
+app.route("/jwt-auth", JWTAuth);
+
+// console.log("======c Get Router Name =======");
+// console.log(getRouterName(app));
+
+// console.log("========= Get Routes =========");
+// showRoutes(app);
+
 export default app;
