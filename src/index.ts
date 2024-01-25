@@ -13,6 +13,7 @@ import RPC from "./rpc";
 import BestPractices from "./best-practices";
 import TProxy from "./proxy";
 import JWTAuth from "./jwt-auth";
+import Streaming from "./streaming";
 
 const app = new Hono();
 
@@ -29,6 +30,7 @@ app.route("/rpc", RPC);
 app.route("/best-practices", BestPractices);
 app.route("/proxy", TProxy);
 app.route("/jwt-auth", JWTAuth);
+app.route("/stream", Streaming);
 
 // console.log("======c Get Router Name =======");
 // console.log(getRouterName(app));
