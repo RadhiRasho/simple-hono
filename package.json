@@ -6,17 +6,22 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "latest"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.5.3",
-    "@hono/zod-validator": "^0.1.11",
-    "hono": "^3.12.6",
-    "zod": "^3.22.4"
+    "@biomejs/biome": "latest",
+    "@hono/zod-validator": "latest",
+    "hono": "latest",
+    "ytdl-core": "^4.11.5",
+    "zod": "latest"
   },
   "scripts": {
+    "dev": "bun run --watch ./src/index.ts",
     "lint": "biome lint --apply .",
     "format": "biome format --write .",
     "biome": "bun format && bun lint"
-  }
+  },
+  "trustedDependencies": [
+    "@biomejs/biome"
+  ]
 }

@@ -5,7 +5,7 @@ const app = new Hono();
 //! Don't make "Controllers" when possible
 //! When possible, you should not create "Ruby on Rails-like Controllers".
 
-import { Context } from "hono";
+import type { Context } from "hono";
 
 //! RoR = Ruby on Rails
 //! 🙁

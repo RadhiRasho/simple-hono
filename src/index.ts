@@ -23,6 +23,7 @@ const app = new Hono();
 app.use("*", timing({ enabled: (c) => c.req.method === "GET" }));
 app.use("*", logger());
 app.use("*", prettyJSON());
+
 app.route("/routes", Routes);
 app.route("/context", Context);
 app.route("/request", HonoReq);
