@@ -12,7 +12,7 @@
     "@biomejs/biome": "latest",
     "@hono/zod-validator": "latest",
     "hono": "latest",
-    "ytdl-core": "^4.11.5",
+    "ytdl-core": "latest",
     "zod": "latest"
   },
   "scripts": {

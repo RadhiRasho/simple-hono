@@ -1,5 +1,7 @@
 import { Hono } from "hono";
 import { basicAuth } from "hono/basic-auth";
+import { bearerAuth } from "hono/bearer-auth";
+import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { poweredBy } from "hono/powered-by";
@@ -8,21 +10,21 @@ const app = new Hono();
 
 //! Execution Order
 
-app.use(async (_, next) => {
-	console.log("middleware 1 start");
-	await next();
-	console.log("middleware 1 end");
-});
-app.use(async (_, next) => {
-	console.log("middleware 2 start");
-	await next();
-	console.log("middleware 2 end");
-});
-app.use(async (_, next) => {
-	console.log("middleware 3 start");
-	await next();
-	console.log("middleware 3 end");
-});
+// app.use(async (_, next) => {
+// 	console.log("middleware 1 start");
+// 	await next();
+// 	console.log("middleware 1 end");
+// });
+// app.use(async (_, next) => {
+// 	console.log("middleware 2 start");
+// 	await next();
+// 	console.log("middleware 2 end");
+// });
+// app.use(async (_, next) => {
+// 	console.log("middleware 3 start");
+// 	await next();
+// 	console.log("middleware 3 end");
+// });
 
 app.get("/", (c) => {
 	console.log("handler");
@@ -59,6 +61,39 @@ app.use(
 		username: "hono",
 		password: "acoolproject",
 	}),
+);
+
+//! Bearer Token Authentication
+
+const token = "honoiscool";
+
+app.use("/api/*", bearerAuth({ token }));
+
+app.get("/api/page", (c) => {
+	return c.json({ message: "You are authorized" });
+});
+
+//! Body Limit Middleware
+
+app.post(
+	"/upload",
+	bodyLimit({
+		maxSize: 50 * 1024,
+		onError: (c) => {
+			return c.text("overflow :(", 413);
+		},
+	}),
+	async (c) => {
+		const body = await c.req.parseBody();
+
+		console.log(body);
+
+		if (body.file instanceof File) {
+			console.log(`Got file sized: ${body.file.size}`);
+		}
+
+		return c.text("pass :)");
+	},
 );
 
 //! Custom logger
