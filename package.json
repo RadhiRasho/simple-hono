@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@biomejs/biome": "latest",
+    "@distube/ytdl-core": "latest",
     "@hono/zod-validator": "latest",
     "hono": "latest",
-    "ytdl-core": "latest",
     "zod": "latest"
   },
   "scripts": {

@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { stream, streamText, streamSSE } from "hono/streaming";
-import ytdl from "ytdl-core";
+import ytdl from "@distube/ytdl-core";
 import { createWriteStream } from "node:fs";
 
 const app = new Hono();
@@ -25,11 +25,7 @@ app.get("/", (c) => {
 app.get("/video", async (c) => {
 	const url = "https://www.youtube.com/watch?v=WQCFOG68Sfo";
 
-	await new Promise<void>((resolve) => {
-		ytdl(url)
-			.pipe(createWriteStream("src/output.mp4"))
-			.on("close", () => resolve());
-	});
+	ytdl(url).pipe(createWriteStream("video.mp4"));
 
 	const file = Bun.file("src/output.mp4");
 

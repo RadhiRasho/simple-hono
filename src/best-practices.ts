@@ -4,7 +4,6 @@ const app = new Hono();
 
 //! Don't make "Controllers" when possible
 //! When possible, you should not create "Ruby on Rails-like Controllers".
-
 import type { Context } from "hono";
 
 //! RoR = Ruby on Rails
@@ -23,6 +22,8 @@ const bookPermalink = (c: Context) => {
 	return c.json(`get ${id}`);
 };
 
+app.get('/booksPermaLink', bookPermalink)
+
 //* write handlers directly after path definitions
 //* 😃
 app.get("/books/:id", (c) => {
@@ -35,7 +36,7 @@ app.get("/books/:id", (c) => {
 import { createFactory } from "hono/factory";
 import { logger } from "hono/logger";
 
-// 😃
+//* 😃
 const factory = createFactory();
 
 const middleware = factory.createMiddleware(async (c, next) => {
