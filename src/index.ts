@@ -17,6 +17,7 @@ import Streaming from "./streaming";
 import { timing } from "hono/timing";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
+import Anime from "./anime";
 
 const app = new Hono();
 
@@ -40,6 +41,7 @@ app.route("/best-practices", BestPractices);
 app.route("/proxy", TProxy);
 app.route("/jwt-auth", JWTAuth);
 app.route("/stream", Streaming);
+app.route("/anime", Anime);
 
 //! console.log("======c Get Router Name =======");
 //! console.log(getRouterName(app));
