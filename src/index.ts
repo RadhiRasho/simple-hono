@@ -4,7 +4,7 @@ import { Hono } from "hono";
 import Routes from "./routes";
 import Context from "./context";
 import HonoReq from "./hono-request";
-// import Socket from "./websocket";
+
 import MiddleWare from "./middleware";
 import Helpers from "./helpers";
 import JSX from "./jsx";
@@ -18,6 +18,8 @@ import { timing } from "hono/timing";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import Anime from "./anime";
+import ContextStorage from "./context-storage";
+import { SocketRoutes, websocket } from "./websocket";
 
 const app = new Hono();
 
@@ -28,8 +30,6 @@ app.use("*", prettyJSON());
 app.route("/routes", Routes);
 app.route("/context", Context);
 app.route("/request", HonoReq);
-
-// app.route("/ws", Socket);
 
 app.route("/middleware", MiddleWare);
 app.route("/helpers", Helpers);
@@ -42,6 +42,9 @@ app.route("/proxy", TProxy);
 app.route("/jwt-auth", JWTAuth);
 app.route("/stream", Streaming);
 app.route("/anime", Anime);
+app.route("/context-storage", ContextStorage);
+
+app.route("/ws", SocketRoutes);
 
 //! console.log("======c Get Router Name =======");
 //! console.log(getRouterName(app));
@@ -49,4 +52,7 @@ app.route("/anime", Anime);
 //! console.log("========= Get Routes =========");
 //! console.log(showRoutes(app));
 
-export default app;
+export default {
+	fetch: app.fetch,
+	websocket,
+};

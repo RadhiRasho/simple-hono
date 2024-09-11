@@ -1,27 +1,25 @@
 import { Hono } from "hono";
-import { serve } from "bun";
+import { createBunWebSocket } from "hono/bun";
+import type { ServerWebSocket } from "bun";
+
+const { upgradeWebSocket, websocket } = createBunWebSocket<ServerWebSocket>();
 
 const app = new Hono();
 
-serve({
-	fetch: (req, server) => {
-		if (server.upgrade(req)) {
-			// handle authentication
-		}
-		return app.fetch(req, server);
-	},
-	websocket: {
-		message(ws, message) {
-			console.log(message);
-			ws.ping();
-			console.log(ws.readyState);
-			console.log(ws.sendText("Jump Please"));
-		},
-		open(ws) {
-			ws.send("Hello!");
-		},
-	},
-	reusePort: true,
-});
+app.get(
+	"/",
+	upgradeWebSocket((c) => {
+		return {
+			onMessage(event, ws) {
+				console.log(ws.raw);
+				console.log(`Message from client: ${event.data}`);
+				ws.send("Hello from server!");
+			},
+			onClose: () => {
+				console.log("Connection closed");
+			},
+		};
+	}),
+);
 
-export default app;
+export { app as SocketRoutes, websocket };
