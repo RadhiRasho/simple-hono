@@ -2,7 +2,7 @@ import { Hono } from "hono";
 
 const app = new Hono();
 
-function Layout1(props: { children: any }) {
+function Layout1(props: { children: unknown }) {
 	return (
 		<html lang="en">
 			<body style={{ color: "white", backgroundColor: "black" }}>

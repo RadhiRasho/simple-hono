@@ -4,13 +4,13 @@ import { testClient } from "hono/testing";
 import app from "../src/testing";
 
 describe("Example", () => {
-	test.skip("GET /posts", async () => {
+	test("GET /posts", async () => {
 		const res = await app.request("/posts");
 		expect(res.status).toBe(200);
 		expect(await res.text()).toBe("Many posts");
 	});
 
-	test.skip("POST /posts", async () => {
+	test("POST /posts", async () => {
 		const res = await app.request("/posts", {
 			method: "POST",
 		});
@@ -21,7 +21,7 @@ describe("Example", () => {
 		});
 	});
 
-	test.skip("POST /posts", async () => {
+	test("POST /posts", async () => {
 		const req = new Request("http://localhost/posts", {
 			method: "POST",
 		});
@@ -42,7 +42,7 @@ describe("Example", () => {
 		},
 	};
 
-	test.skip("GET /posts", async () => {
+	test("GET /posts", async () => {
 		const res = await app.request("/posts", {}, MOCK_ENV);
 	});
 
