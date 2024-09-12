@@ -1,5 +1,5 @@
-import { Hono } from "hono";
 import type { SearchResults } from "@/types/anime";
+import { Hono } from "hono";
 
 const app = new Hono();
 

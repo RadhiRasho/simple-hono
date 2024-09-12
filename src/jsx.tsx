@@ -18,7 +18,7 @@ function Top(props: { messages: string[] }) {
 			<h1>Hello Hono!</h1>
 			<ul>
 				{props.messages.map((message: string) => (
-					<li>{message}!!</li>
+					<li key={message}>{message}!!</li>
 				))}
 			</ul>
 		</Layout1>
@@ -146,7 +146,7 @@ app.get("/async", (c) => {
 });
 
 //! Suspense (Experimental Currently)
-import { renderToReadableStream, Suspense } from "hono/jsx/streaming";
+import { Suspense, renderToReadableStream } from "hono/jsx/streaming";
 
 app.get("/suspense", (c) => {
 	const stream = renderToReadableStream(

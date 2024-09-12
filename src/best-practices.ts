@@ -22,7 +22,7 @@ const bookPermalink = (c: Context) => {
 	return c.json(`get ${id}`);
 };
 
-app.get('/booksPermaLink', bookPermalink)
+app.get("/booksPermaLink", bookPermalink);
 
 //* write handlers directly after path definitions
 //* 😃

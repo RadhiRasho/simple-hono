@@ -1,7 +1,7 @@
-import { test, expect, describe } from "bun:test";
-import app from "../src/testing";
+import { describe, expect, test } from "bun:test";
 import { Hono } from "hono";
 import { testClient } from "hono/testing";
+import app from "../src/testing";
 
 describe("Example", () => {
 	test.skip("GET /posts", async () => {

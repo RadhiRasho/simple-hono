@@ -1,5 +1,5 @@
 import { hc } from "hono/client";
-import { AppType } from "./rpc";
+import type { AppType } from "./rpc";
 
 const client = hc<AppType>("http://localhost:3000/rpc", {
 	headers: {
