@@ -1,21 +1,19 @@
 import { Hono } from "hono";
-// import { getRouterName, showRoutes } from "hono/dev";
-
-import Context from "./context";
-import HonoReq from "./hono-request";
-import Routes from "./routes";
-
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { timing } from "hono/timing";
+
 import Anime from "./anime";
 import BestPractices from "./best-practices";
+import Context from "./context";
 import ContextStorage from "./context-storage";
 import Helpers from "./helpers";
+import HonoReq from "./hono-request";
 import JSX from "./jsx";
 import JWTAuth from "./jwt-auth";
 import MiddleWare from "./middleware";
 import TProxy from "./proxy";
+import Routes from "./routes";
 import RPC from "./rpc";
 import Streaming from "./streaming";
 import Validator from "./validator";
@@ -46,11 +44,14 @@ app.route("/context-storage", ContextStorage);
 
 app.route("/ws", SocketRoutes);
 
-//! console.log("======c Get Router Name =======");
-//! console.log(getRouterName(app));
-
-//! console.log("========= Get Routes =========");
-//! console.log(showRoutes(app));
+/* ******************************************************************************
+ * Prints out the current router being used and all current routes, full depth
+ * import { getRouterName, showRoutes } from "hono/dev";
+ * console.log("======c Get Router Name =======");
+ * console.log(getRouterName(app));
+ * console.log("========= Get Routes =========");
+ * console.log(showRoutes(app));
+ * ******************************************************************************/
 
 export default {
 	fetch: app.fetch,

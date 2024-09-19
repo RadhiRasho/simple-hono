@@ -32,10 +32,9 @@ app.get("/", (c) => {
 
 //! Fragment Usage
 
-import { ErrorBoundary, Fragment } from "hono/jsx";
-
 const List = () => (
 	<Fragment>
+		<div>List 1</div>
 		<p>first child</p>
 		<p>second child</p>
 		<p>third child</p>
@@ -44,23 +43,26 @@ const List = () => (
 
 // OR
 
-// const List = () => (
-//   <>
-//     <p>first child</p>
-//     <p>second child</p>
-//     <p>third child</p>
-//   </>
-// )
+const List2 = () => (
+	<>
+		<div>List 2</div>
+		<p>first child</p>
+		<p>second child</p>
+		<p>third child</p>
+	</>
+);
 
 app.get("/list", (c) => {
 	return c.html(<List />);
 });
 
+app.get("/list2", (c) => c.html(<List2 />));
+
 //! Raw html
 
 app.get("/foo", (c) => {
 	const inner = { __html: "JSX &middot; SSR" };
-	// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+	// biome-ignore lint/security/noDangerouslySetInnerHtml: Reason's that I won't go into right now
 	const Div = <div dangerouslySetInnerHTML={inner} />;
 
 	return c.html(Div);
@@ -68,11 +70,11 @@ app.get("/foo", (c) => {
 
 //! Memoization of components
 
-import { memo } from "hono/jsx";
+import { ErrorBoundary, Fragment, memo } from "hono/jsx";
 
 const Header = memo(() => <header>Welcome to Hono</header>);
 const Footer = memo(() => <footer>Powered by Hono</footer>);
-const MemoLayout = (
+const MemoLayout = () => (
 	<div>
 		<Header />
 		<p>Hono is cool!</p>
@@ -81,7 +83,7 @@ const MemoLayout = (
 );
 
 app.get("/memo", (c) => {
-	return c.html(MemoLayout);
+	return c.html(<MemoLayout />);
 });
 
 //! Context
@@ -131,7 +133,7 @@ app.get("/context", (c) => {
 //! Async Components
 
 async function AsyncComponent1() {
-	await new Promise((r) => setTimeout(r, 10000)); // sleep 1s
+	await new Promise((r) => setTimeout(r, 4000));
 	return <div>Done!</div>;
 }
 
@@ -150,7 +152,7 @@ import { Suspense, renderToReadableStream } from "hono/jsx/streaming";
 
 app.get("/suspense", (c) => {
 	const stream = renderToReadableStream(
-		<html lang="en">
+		<html lang="en-US">
 			<body>
 				<Suspense fallback={<div>loading...</div>}>
 					<AsyncComponent1 />
@@ -170,30 +172,17 @@ app.get("/suspense", (c) => {
 
 //? SYNC Components
 
-function SyncComponent() {
-	throw new Error("Error");
-	// biome-ignore lint/correctness/noUnreachable: <Expected Error>
-	return <div>Hello</div>;
-}
-
-app.get("/sync", async (c) => {
-	return c.html(
-		<html lang="en">
-			<body>
-				<ErrorBoundary fallback={<div>Out of Service</div>}>
-					<SyncComponent />
-				</ErrorBoundary>
-			</body>
-		</html>,
-	);
-});
+app.get("/sync", async () => {});
 
 //? ASYNC Components
 
 async function AsyncComponent() {
-	await new Promise((resolve) => setTimeout(resolve, 10000));
-	throw new Error("Error");
-	// biome-ignore lint/correctness/noUnreachable: <Expected Error>
+	await new Promise((resolve) => setTimeout(resolve, 4000));
+
+	if (Math.random() > 0.5) {
+		throw new Error("Error");
+	}
+
 	return <div>Hello</div>;
 }
 
@@ -217,19 +206,20 @@ import { html } from "hono/html";
 
 interface SiteData {
 	title: string;
-	children?: any;
+	children?: unknown;
 }
 
 function Layout(props: SiteData) {
-	return html`<!DOCTYPE html>
-  <html>
-    <head>
-      <title>${props.title}</title>
-    </head>
-    <body>
-      ${props.children}
-    </body>
-  </html>`;
+	return html`
+	<!DOCTYPE html>
+  	<html>
+    	<head>
+      		<title>${props.title}</title>
+    	</head>
+   		<body>
+      		${props.children}
+    	</body>
+  	</html>`;
 }
 
 function Content(props: { siteData: SiteData; name: string }) {

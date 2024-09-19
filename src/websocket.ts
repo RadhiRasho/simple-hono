@@ -8,11 +8,11 @@ const app = new Hono();
 
 app.get(
 	"/",
-	upgradeWebSocket((c) => {
+	upgradeWebSocket(() => {
 		return {
 			onMessage(event, ws) {
-				console.log(ws.raw);
-				console.log(`Message from client: ${event.data}`);
+				console.log(JSON.parse(event.data.toString()));
+
 				ws.send("Hello from server!");
 			},
 			onClose: () => {
